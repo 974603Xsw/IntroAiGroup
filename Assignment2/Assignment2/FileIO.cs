@@ -11,11 +11,12 @@ namespace Assignment2
     {
         private StreamReader sr;
         private string line;
-        private List<string> StoredLines;
+        private string TrimLine;
+        private List<string> KnowledgeBase;
 
         public FileIO(string Fname)
         {
-            StoredLines = new List<string>();
+            KnowledgeBase = new List<string>();
             Open(Fname);
         }
 
@@ -32,7 +33,8 @@ namespace Assignment2
                         string[] seperatedText = line.Split(';');
                         foreach (string l in seperatedText)
                         {
-                            StoredLines.Add(l);
+                            TrimLine = l.Trim();
+                            KnowledgeBase.Add(TrimLine);
                         }
                     }
                     Result = true;
@@ -48,12 +50,16 @@ namespace Assignment2
             return Result;
         }
 
+        public List<string> getStoredLines()
+        {
+            return KnowledgeBase;
+        }
+
         public void ExpelStoredLines()
         {
-            for(int i = 0; i < StoredLines.Count; i++)
+            for(int i = 0; i < KnowledgeBase.Count; i++)
             {
-                Console.WriteLine(StoredLines[i]);
-                //Console.WriteLine("\n");
+                Console.WriteLine(KnowledgeBase[i]);
             }
         }
     }
