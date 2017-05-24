@@ -11,17 +11,25 @@ namespace Assignment2
         static void Main(string[] args)
         {
             FileIO Fio = new FileIO(args[1]);
-            Inference_Engine JSfio = new Inference_Engine(args[1]);
-            TT TruthTable = new TT(Fio.getKB());
-            BC2 BC = new BC2(JSfio.getAsk(), TruthTable.getTell());
-            BC2.initialise(TruthTable.getTell());
-            BC.execute();
-
-            if (args[0] == "FIO")
+            
+            if (args[0] == "TT")
             {
-                //Fio.OrganiseAT();
-                Fio.ExpelStoredLines();
-                Console.WriteLine("\n\n");
+                TT TruthTable = new TT(Fio.getKB());
+                TruthTable.PairVariablesToTable();
+                TruthTable.PairTelltoTable();
+                TruthTable.PopulateTruthTable();
+                TruthTable.PopulateAskedTable();
+                TruthTable.CheckTable();
+            }
+            else if (args[0] == "FC")
+            {
+                BC2 BC = new BC2(Fio.getAsk(), Fio.getTell());
+                BC2.initialise(Fio.getTell());
+                Console.WriteLine(BC.execute());
+            }
+            else if (args[0] == "BC")
+            {
+
             }
         }
     }

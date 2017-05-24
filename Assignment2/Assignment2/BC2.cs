@@ -27,6 +27,9 @@ namespace Assignment2
 			facts = new List<string>();
 			tell = t;
 			ask = a;
+
+            if (ask.Contains(";"))
+                ask = ask.Replace(";", "");
 		}
 
 		//Method which sets up inital values for BC
@@ -153,7 +156,7 @@ namespace Assignment2
 		public static bool conclusionContains(string clause, string c)
 		{
 			string conclusion = clause.Split('=')[1];
-			if (conclusion.Equals(c))
+			if (conclusion.Contains(c))
 			{
 				return true;
 			}

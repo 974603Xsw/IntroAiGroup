@@ -78,13 +78,13 @@ namespace Assignment2
                 if (StoreTell && (l != "TELL;" && l!= "ASK;"))
                 {
                     if(l != "" && l != " " && l!= ";")
-                        Tell += l;
+                        Tell += l.Trim();
                 }
 
                 if(StoreAsk && (l != "TELL;" && l != "ASK;"))
                 {
                     if (l != "" && l != " " && l != ";")
-                        Ask += l;
+                        Ask += l.Trim();
                 }
             }
         }
@@ -97,6 +97,16 @@ namespace Assignment2
         public List<string> getStoredLines()
         {
             return KnowledgeBase;
+        }
+
+        public string getTell()
+        {
+            return Tell;
+        }
+
+        public string getAsk()
+        {
+            return Ask;
         }
 
         public void ExpelStoredLines()
