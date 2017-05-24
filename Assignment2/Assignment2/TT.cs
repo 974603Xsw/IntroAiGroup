@@ -9,6 +9,7 @@ namespace Assignment2
     class TT
     {
         private int[,] TruthTable;
+        private int[] askedTable;
         private List<string> KnowledgeBase;
         private List<string> possibleConditions;
         private List<string> Variables;
@@ -18,6 +19,7 @@ namespace Assignment2
         private Dictionary<int, string> TellIndex;
         private int MaxRows;
         private int MaxCols;
+        private int TruthCount;
         private string FirstVar;
         private string SecondVar;
         private string conditionUsed;
@@ -41,6 +43,7 @@ namespace Assignment2
             Conjunction = "^";
             Disjunction = "!^";
             EOS = ";";
+            TruthCount = 0;
 
             KnowledgeBase = new List<string>(KB);
             possibleConditions = new List<string>();
@@ -63,7 +66,9 @@ namespace Assignment2
             SepAskTell();
             MaxCols = Tell.Count + Variables.Count;
 
-            TruthTable = new int[Convert.ToInt32(MaxRows), MaxCols];
+            TruthTable = new int[MaxRows, MaxCols];
+            askedTable = new int[MaxRows];
+
             for(int i = 0; i < MaxRows; i++)
             {
                 for (int j = 0; j < MaxCols; j++)
@@ -83,6 +88,41 @@ namespace Assignment2
 
             foreach (string line in Tell) 
             Console.WriteLine(line);
+
+            PopulateAskedTable();
+            CheckTable();
+            if (TruthCount > 0)
+                Console.WriteLine("YES: " + TruthCount);
+            else
+                Console.WriteLine("NO");
+        }
+
+        private void CheckTable()
+        {
+            TruthCount = 0;
+            bool Matched = true;
+
+            for(int i = 0; i < MaxRows; i++)
+            {
+                Matched = true;
+
+                for(int j = Variables.Count; j < MaxCols; j++)
+                {
+                    if (TruthTable[i, j] != askedTable[i])
+                        Matched = false;
+                }
+
+                if (Matched)
+                    TruthCount++;
+            }
+        }
+
+        private void PopulateAskedTable()
+        {
+            for(int i = 0; i < MaxRows; i++)
+            {
+                askedTable[i] = AssessStatement(Ask[0], i);
+            }
         }
 
         private void PopulateTruthTable()
@@ -105,7 +145,6 @@ namespace Assignment2
 
                 for(int j = binary.Length; j < MaxCols; j++)
                 {
-                    Console.WriteLine("Iteration:" + j);
                     TruthTable[i, j] = AssessStatement(TellIndex[j], i);
                 }
             }
@@ -181,9 +220,6 @@ namespace Assignment2
 
             FirstVar = FirstVar.Trim();
             SecondVar = SecondVar.Trim();
-            Console.WriteLine("First:" + FirstVar);
-            Console.WriteLine("Second:" + SecondVar);
-            Console.WriteLine("ConditionUsed:" + conditionUsed);
 
             if (extraCondition != "")
             {
