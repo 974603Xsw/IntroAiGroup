@@ -81,13 +81,13 @@ namespace Assignment2
             PairTelltoTable();
 
             PopulateTruthTable();
-            PrintTable();
+            /*PrintTable();
 
             foreach (string line in Variables)
                 Console.WriteLine(line);
 
             foreach (string line in Tell) 
-            Console.WriteLine(line);
+            Console.WriteLine(line);*/
 
             PopulateAskedTable();
             CheckTable();
@@ -95,6 +95,19 @@ namespace Assignment2
                 Console.WriteLine("YES: " + TruthCount);
             else
                 Console.WriteLine("NO");
+        }
+        
+        public string getTell()
+        {
+            string te = "";
+            foreach (string t in Tell)
+                te += t;
+            return te;
+        }
+
+        public string getAsk()
+        {
+            return Ask[0];
         }
 
         private void CheckTable()

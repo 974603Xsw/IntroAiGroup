@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BC2.cs" />
     <Compile Include="FileIO.cs" />
+    <Compile Include="Inference Engine.cs" />
     <Compile Include="InstructionParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

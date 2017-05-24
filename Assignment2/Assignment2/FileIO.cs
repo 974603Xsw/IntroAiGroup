@@ -21,11 +21,11 @@ namespace Assignment2
         public FileIO(string Fname)
         {
             KnowledgeBase = new List<string>();
-            Open(Fname);
             Ask = "";
             Tell = "";
             StoreAsk = false;
             StoreTell = false;
+            Open(Fname);
         }
 
         private bool Open(string Fname)
@@ -64,25 +64,27 @@ namespace Assignment2
         {
             foreach(string l in KnowledgeBase)
             {
-                if (l == "TELL")
+                if (l == "TELL;")
                 {
                     StoreTell = true;
                     StoreAsk = false;
                 }
-                else if(l == "ASK")
+                else if(l == "ASK;")
                 {
                     StoreTell = false;
                     StoreAsk = true;
                 }
-
-                if(StoreTell && (l != "TELL" && l!= "ASK"))
+ 
+                if (StoreTell && (l != "TELL;" && l!= "ASK;"))
                 {
-                    Tell += l;
+                    if(l != "" && l != " " && l!= ";")
+                        Tell += l;
                 }
 
-                if(StoreAsk && (l != "TELL" && l != "ASK"))
+                if(StoreAsk && (l != "TELL;" && l != "ASK;"))
                 {
-                    Ask += l;
+                    if (l != "" && l != " " && l != ";")
+                        Ask += l;
                 }
             }
         }
@@ -104,7 +106,7 @@ namespace Assignment2
                 Console.WriteLine(KnowledgeBase[i]);
             }
 
-            //Console.WriteLine("\n\nTELL:\n" + Tell + "\n\nASK:\n" + Ask);
+            Console.WriteLine("\n\nTELL:\n" + Tell + "\n\nASK:\n" + Ask);
         }
     }
 }
