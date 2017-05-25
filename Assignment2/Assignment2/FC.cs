@@ -72,8 +72,7 @@ namespace Assignment2
                 string p = agenda[0];
                 agenda.RemoveAt(0);
                 // add to entailed
-                //if(!entailed.Contains(p))
-                    entailed.Add(p);
+                entailed.Add(p);
                 // for each of the clauses....
                 for (int i = 0; i < clauses.Count; i++)
                 {
@@ -89,14 +88,6 @@ namespace Assignment2
                             // the conclusion has been proven so put into agenda
                             string head = clauses[i].Split('=')[1];
                             // have we just proven the 'ask'?
-                            /*foreach (string h in head)
-                            {
-                                string var = h;
-                                if (var.Contains("> "))
-                                    var = var.Replace("> ", "");
-                                if (var.Equals(ask))
-                                    return true;
-                            }*/
                             head = head.Trim();
                             if (head.Equals(ask))
                                 return true;
