@@ -41,7 +41,7 @@ namespace Assignment2
                         string[] seperatedText = line.Split(';');
                         foreach (string l in seperatedText)
                         {
-                            TrimLine = l.Trim();
+                            TrimLine = l;//.Trim();
                             KnowledgeBase.Add(TrimLine + ";");
                         }
                     }
@@ -77,14 +77,14 @@ namespace Assignment2
  
                 if (StoreTell && (l != "TELL;" && l!= "ASK;"))
                 {
-                    if(l != "" && l != " " && l!= ";")
-                        Tell += l.Trim();
+                    if (l != "" && l != " " && l != ";")
+                        Tell += l;//.Trim();
                 }
 
                 if(StoreAsk && (l != "TELL;" && l != "ASK;"))
                 {
                     if (l != "" && l != " " && l != ";")
-                        Ask += l.Trim();
+                        Ask += l;//.Trim();
                 }
             }
         }

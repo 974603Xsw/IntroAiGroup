@@ -1,10 +1,15 @@
 Student Details:
-Adam Guest
-Jordan Smith
+Adam Guest:
+Jordan Smith: 100568702
 Sean Morris: 974603X
 
 Features:
 
+i)	Truth table method working
+ii)	Forward chaining method working
+iii)	Backward chaining method working
+iv)	This Readme File
+v)	Research??? + Extras
 
 Test Cases:
 

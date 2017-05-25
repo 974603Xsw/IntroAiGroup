@@ -20,7 +20,10 @@ namespace Assignment2
 			entailed = new List<string>();
 			facts = new List<string>();
 			tell = t;
-			ask = a;
+            if(a.Contains(";"))
+                a = a.Replace(";", "");
+            a = a.Trim();
+            ask = a;
 			initialise(tell);
 		}
 
