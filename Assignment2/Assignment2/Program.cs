@@ -28,7 +28,7 @@ namespace Assignment2
             }
             else if (args[0] == "BC")
             {
-                BC2 BackwardChaining = new Assignment2.BC2(Fio.getAsk(), Fio.getTell());
+                BC2 BackwardChaining = new Assignment2.BC2(Fio.getAsk2(), Fio.getTell2());
                 Console.WriteLine(BackwardChaining.execute());
             }
         }

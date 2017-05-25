@@ -13,14 +13,18 @@ namespace Assignment2
         private string line;
         private string TrimLine;
         private List<string> KnowledgeBase;
+        private List<string> KB2;
         private string Ask;
         private string Tell;
+        private string Ask2;
+        private string Tell2;
         private bool StoreAsk;
         private bool StoreTell;
 
         public FileIO(string Fname)
         {
             KnowledgeBase = new List<string>();
+            KB2 = new List<string>();
             Ask = "";
             Tell = "";
             StoreAsk = false;
@@ -41,7 +45,9 @@ namespace Assignment2
                         string[] seperatedText = line.Split(';');
                         foreach (string l in seperatedText)
                         {
-                            TrimLine = l;//.Trim();
+                            TrimLine = l;
+                            KB2.Add(TrimLine + ";");
+                            TrimLine = l.Trim();
                             KnowledgeBase.Add(TrimLine + ";");
                         }
                     }
@@ -78,13 +84,39 @@ namespace Assignment2
                 if (StoreTell && (l != "TELL;" && l!= "ASK;"))
                 {
                     if (l != "" && l != " " && l != ";")
-                        Tell += l;//.Trim();
+                        Tell += l.Trim();
                 }
 
                 if(StoreAsk && (l != "TELL;" && l != "ASK;"))
                 {
                     if (l != "" && l != " " && l != ";")
-                        Ask += l;//.Trim();
+                        Ask += l.Trim();
+                }
+            }
+
+            foreach (string l in KB2)
+            {
+                if (l == "TELL;")
+                {
+                    StoreTell = true;
+                    StoreAsk = false;
+                }
+                else if (l == "ASK;")
+                {
+                    StoreTell = false;
+                    StoreAsk = true;
+                }
+
+                if (StoreTell && (l != "TELL;" && l != "ASK;"))
+                {
+                    if (l != "" && l != " " && l != ";")
+                        Tell2 += l;
+                }
+
+                if (StoreAsk && (l != "TELL;" && l != "ASK;"))
+                {
+                    if (l != "" && l != " " && l != ";")
+                        Ask2 += l;
                 }
             }
         }
@@ -107,6 +139,16 @@ namespace Assignment2
         public string getAsk()
         {
             return Ask;
+        }
+
+        public string getTell2()
+        {
+            return Tell2;
+        }
+
+        public string getAsk2()
+        {
+            return Ask2;
         }
 
         public void ExpelStoredLines()
