@@ -10,3 +10,9 @@ C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment 2\Assignment2\A
 C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment 2\Assignment2\Assignment2\Assignment2\obj\Debug\Assignment2.csprojResolveAssemblyReference.cache
 C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment 2\Assignment2\Assignment2\Assignment2\bin\Debug\Assignment2.exe
 C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment 2\Assignment2\Assignment2\Assignment2\bin\Debug\Assignment2.pdb
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\bin\Debug\Assignment2.exe.config
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\obj\Debug\Assignment2.exe
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\obj\Debug\Assignment2.pdb
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\bin\Debug\Assignment2.exe
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\bin\Debug\Assignment2.pdb
+C:\Users\Sean\Desktop\Sean_Uni\2017\Sem 1\Intro to AI\Assignment2\Assignment2\Assignment2\obj\Debug\Assignment2.csprojResolveAssemblyReference.cache

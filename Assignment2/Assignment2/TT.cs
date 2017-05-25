@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Sean Morris
+//974603X
+
 namespace Assignment2
 {
     class TT
@@ -142,97 +145,97 @@ namespace Assignment2
 
         private int AssessStatement(string statement, int row)  //main logic of TT method. assess the statement to assign the respective value in the truthtable. 
         {
-            FirstVar = "";
-            SecondVar = "";
-            bool result = false;
-            conditionUsed = "";
-            string extraStatement = "";
-            string extraCondition = "";
-            bool extraStatementPresent = false;
-            bool gettingCondition = false;
-            bool EOSreached = false;
-            bool FirstStatementValue = false;
+            FirstVar = "";                      //Stores the first variables of the statement e.g. p1, p2, p3, a, b, etc...
+            SecondVar = "";                     //stores the second variable of the statement e.g. p1, p2, p3, a, b, etc...
+            bool result = false;                //stores whether the statement has been detected to be true or false.
+            conditionUsed = "";                 //stores the condition which was used in the statement. e.g. =>, &, etc...
+            string extraStatement = "";         //detects if another statement is in current statement. e.g. a&b => c, one statement is a&b, next is => c
+            string extraCondition = "";         //stores the extra condition if any
+            bool extraStatementPresent = false; //bool used to detect if another stateme1nt is present. 
+            bool gettingCondition = false;      //bool used to determine if condition is being read in from statement, to prevent storage of first/second variable.
+            bool EOSreached = false;            //detects if end of statement reached. 
+            bool FirstStatementValue = false;   //stores the value of the first statement if another statement is present. 
 
-            foreach (char a in statement)
+            foreach (char a in statement)       //cycling through each char of the statement. 
             {
-                gettingCondition = false;
-                foreach (string cond in possibleConditions)
+                gettingCondition = false;       //setting getting condition to false at the start of each cycle. 
+                foreach (string cond in possibleConditions)  //running through each condition in the conditions list and seeing if the current character is present in list. 
                 {
                     if (cond.Contains<Char>(a))
                     {
-                        gettingCondition = true;
-                        if (conditionUsed == "")
+                        gettingCondition = true;            //if there is a character present from the conditions list we set gettingcondition to be true. 
+                        if (conditionUsed == "")            //checking if we have already detected a condition to be used. 
                         {
-                            conditionUsed = cond;
+                            conditionUsed = cond;           //if not we store the current detected condition. 
                             break;
                         }
-                        else if (conditionUsed != cond)
+                        else if (conditionUsed != cond)     //if there already is a condition stored we check if this is the eos symbol. although it is not really a condition we store it to make use of detecitng eos. 
                         {
                             if (a == ';')
                                 EOSreached = true;
                             else
                             {
-                                extraStatementPresent = true;
+                                extraStatementPresent = true;       //if the extra condition is not the eos we start storing the extra condition and set the extrastatement bool to true. 
                                 extraCondition += a;
                             }
                         }
                     }
                 }
 
-                if (!EOSreached && !gettingCondition && !extraStatementPresent)
+                if (!EOSreached && !gettingCondition && !extraStatementPresent)     //checking to make sure that we can start storing the first/second statement then storing. 
                 {
                     if (conditionUsed == "")
                         FirstVar += a;
-                    else if (conditionUsed != "")
+                    else if (conditionUsed != "")   //if we have stored our condition already then we can start storing the second variable. 
                         SecondVar += a;
                 }
-                else if (extraStatementPresent && !gettingCondition)
+                else if (extraStatementPresent && !gettingCondition)      //if we do ave an extra statement and are not getting the condition we start getting the extra statement. 
                     extraStatement += a;
             }
 
-            FirstVar = FirstVar.Trim();
+            FirstVar = FirstVar.Trim();         //trimming the first and second variables so no spaces. 
             SecondVar = SecondVar.Trim();
 
-            if (extraCondition != "")
+            if (extraCondition != "")   //if there is an extra condition detected we calculate then start calculating what the correct value for the first statement should be
             {
                 FirstStatementValue = StatementValue(TruthTable[row, VariableIndex[FirstVar]], TruthTable[row, VariableIndex[SecondVar]], conditionUsed);
 
-                if (FirstStatementValue)
+                if (FirstStatementValue)        //then we take the first statement and plug it into our method for calculating the correct value to determine the value for the whole statement. 
                     result = StatementValue(1, TruthTable[row, VariableIndex[extraStatement.Trim()]], extraCondition.Trim());
                 else
                     result = StatementValue(0, TruthTable[row, VariableIndex[extraStatement.Trim()]], extraCondition.Trim());
             }
-            else if (SecondVar != "")
+            else if (SecondVar != "")   //if there is no second statement and there is a second variable detected then we use our method to determine the value using the truth table. 
                 result = StatementValue(TruthTable[row, VariableIndex[FirstVar]], TruthTable[row, VariableIndex[SecondVar]], conditionUsed);
             else
-                result = StatementValue(TruthTable[row, VariableIndex[FirstVar]], 1, "NONE");
+                result = StatementValue(TruthTable[row, VariableIndex[FirstVar]], 1, "NONE");   //if there is no second statement we input these values for the our statement calculations. 
 
-            if (result)
+            if (result)      //returning the value to be stored in our truth table for the statement. 
                 return 1;
             else
                 return 0;
         }
 
-        private bool StatementValue(int a, int b, string condition)
+        private bool StatementValue(int a, int b, string condition) //calculating the result of a statement. 
         {
             bool result = false;
 
-            if (condition == Implication)
+            if (condition == Implication)       //basic logic for if implication is the condition
             {
                 if (a == 0 || b == 1)
                     result = true;
             }
-            else if (condition == And)
+            else if (condition == And)          //basic logic for if & is the condition
             {
                 if (a == 1 && b == 1)
                     result = true;
             }
-            else if (condition == Biconditional)
+            else if (condition == Biconditional)      //basic logic for if biconditional is the statement
             {
                 if (a == b)
                     result = true;
             }
-            else if (condition == "NONE")
+            else if (condition == "NONE")           //basic statement for if there is only one variable. if our statement is a fact. 
             {
                 if (a == 1)
                     result = true;
@@ -242,42 +245,43 @@ namespace Assignment2
             return result;
         }
 
-        public void CheckTable()
+        public void CheckTable()        //finding what statements are true comparing the knowledgebase values against the query/asked. 
         {
             TruthCount = 0;
             bool Matched = true;
 
-            for(int i = 0; i < MaxRows; i++)
+            for(int i = 0; i < MaxRows; i++)    //cycling through all rows of the truth table. 
             {
-                Matched = true;
+                Matched = true;                 //reseting matched to be true for each cycle. 
 
-                for(int j = Variables.Count; j < MaxCols; j++)
+                for(int j = Variables.Count; j < MaxCols; j++)  //cycling through the Knowledge base values within the truth table
                 {
-                    if (TruthTable[i, j] != askedTable[i])
+                    if (TruthTable[i, j] != askedTable[i])      //checking if the current col and row element matches or not with the respective query statement. 
                         Matched = false;
                 }
 
-                if (Matched)
+                if (Matched)                                    //if there is a match we increment the count. 
                     TruthCount++;
             }
 
-            if (TruthCount > 0)
+            if (TruthCount > 0)                                 //if there were matches we print out the result and counted matches. 
                 Console.WriteLine("YES: " + TruthCount);
             else
-                Console.WriteLine("NO");
+                Console.WriteLine("NO");                        //else we print our result no. 
         }
 
-        public void PopulateAskedTable()
+        public void PopulateAskedTable()                //populating the table for the asked/query. 
         {
             askedTable = new int[MaxRows];
 
-            for (int i = 0; i < MaxRows; i++)
+            for (int i = 0; i < MaxRows; i++)           //cycle through rows. 
             {
-                askedTable[i] = AssessStatement(Ask[0], i);
+                askedTable[i] = AssessStatement(Ask[0], i);     //since there is only one element in ask list. we pass the first element, we use assess statement as it uses values from truth table to determine 
+                                                                //the value asked for depending on the statement. 
             }
         }
 
-        public void PopulateTruthTable()
+        public void PopulateTruthTable()                    //populating the truth table. 
         {
             TruthTable = new int[MaxRows, MaxCols];
 
@@ -287,32 +291,33 @@ namespace Assignment2
                 {
                     TruthTable[i, j] = 0;
                 }
-            }
+            }                                               //initialising the truth table with 0. 
 
-            string binary = "";
-            int padding = 0;
+            string binary = "";                             //setting up storage for a binary value. whose number of bits is the number of variables found in the knowledge base. 
+            int padding = 0;                                //setting up the number of bits which need to be padded infront of the binary value
 
             for(int i = 0; i < MaxRows; i++)
             {
-                binary = Convert.ToString(i, 2);
-                padding = Variables.Count - binary.Length;
+                binary = Convert.ToString(i, 2);            //storing the binary value for the row we are using to place in the truth table for variables side. 
+                padding = Variables.Count - binary.Length;  //calculating the passing required. 
                 
                 for (int x = 0; x < padding; x++)
-                    binary = "0" + binary;
+                    binary = "0" + binary;                  //adding the padding to the actual binary storage. 
            
                 for (int j = 0; j < binary.Length; j++)
                 {
-                    TruthTable[i, j] = Convert.ToInt32(binary[j].ToString());
+                    TruthTable[i, j] = Convert.ToInt32(binary[j].ToString());       //for the binary length we store it in the truth table for each bit respectively. since the truth table is already organised
+                                                                                    //for each col to correspond with the variable and then KB in sequence they are detected/stored. 
                 }
 
-                for(int j = binary.Length; j < MaxCols; j++)
-                {
+                for(int j = binary.Length; j < MaxCols; j++)                        //once the line of columns are done for the variables, we asses the neccesary statements. 
+                {                                                                   //binary length is used to skip the cols already registered for variables, but we can also use variables.count. 
                     TruthTable[i, j] = AssessStatement(TellIndex[j], i);
                 }
             }
         }
 
-        public void PrintTable()
+        public void PrintTable()                                        //simple method for printing the truth table. used for early debugging purposes. 
         {
             for (int i = 0; i < MaxRows; i++)
             {
@@ -330,7 +335,7 @@ namespace Assignment2
             }
         }
 
-        public void PairVariablesToTable()
+        public void PairVariablesToTable()                  //pairing the variables in a dictionairy to pair the variables to their respective thruth table column. essentially storing the index 
         {
             for(int i = 0; i < Variables.Count; i++)
             {
@@ -338,7 +343,7 @@ namespace Assignment2
             }
         }
 
-        public void PairTelltoTable()
+        public void PairTelltoTable()                       //pairing the Knowledge base statements to their own respective columns. like pairvariables to table, we are just storing the index. 
         {
             for(int i = Variables.Count; i < MaxCols; i++)
             {

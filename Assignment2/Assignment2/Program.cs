@@ -14,12 +14,12 @@ namespace Assignment2
             
             if (args[0] == "TT")
             {
-                TT TruthTable = new TT(Fio.getKB());
-                TruthTable.PairVariablesToTable();
-                TruthTable.PairTelltoTable();
-                TruthTable.PopulateTruthTable();
-                TruthTable.PopulateAskedTable();
-                TruthTable.CheckTable();
+                TT TruthTable = new TT(Fio.getKB());    //construtor for Truth Table Method.
+                TruthTable.PairVariablesToTable();      //Pairing the variables found in KnowledgeBase to truth table. (storing index)
+                TruthTable.PairTelltoTable();           //Pairing the statements found in KnowledgeBase to truth table. (storing index)
+                TruthTable.PopulateTruthTable();        //populating the truthtable per knowledgebase statements, facts.
+                TruthTable.PopulateAskedTable();        //populating the query truth table using the truthtable already made.
+                TruthTable.CheckTable();                //cross referencing matches within the query truth table and knowledgebase truthtable. 
             }
             else if (args[0] == "FC")
             {
