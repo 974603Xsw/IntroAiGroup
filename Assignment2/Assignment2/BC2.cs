@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace Assignment2
 {
-	//Resources Are As Follows
-	//BC   http://snipplr.com/view/56297/ai-backward-chaining-implementation-for-propositional-logic-horn-form-knowledge-bases/
-	//FC   http://snipplr.com/view/56296/ai-forward-chaining-implementation-for-propositional-logic-horn-form-knowledge-bases/
-	//BC Pusedo http://www-personal.umd.umich.edu/~leortiz/teaching/6.034f/Fall05/rules/fwd_bck.pdf
-	// Need to adjust to match people codes
-
 	public class BC2
 	{
 		public static string tell;
@@ -27,17 +21,15 @@ namespace Assignment2
 			facts = new List<string>();
 			tell = t;
 			ask = a;
-
-            if (ask.Contains(";"))
-                ask = ask.Replace(";", "");
+			initialise(tell);
 		}
 
-		//Method which sets up inital values for BC
-		public static void initialise(string tell)
+		//Method which sets up inital values for BC, called in creating BC class
+		public static void initialise(string _tell)//string tell
 		{
 			agenda.Add(ask);
 			//Split Knowledge base into sentences
-			String[] sentences = tell.Split(';');
+			String[] sentences = _tell.Split(';');
 			for (int i = 0; i < sentences.Length; i++)
 			{
 				if (!sentences[i].Contains("=>"))
@@ -51,12 +43,11 @@ namespace Assignment2
 			}
 		}
 
-		//Method which calls the main bcentails() method and returns output back to iengine
+		//Method which calls the main bcentails() method and returns output
 		public string execute()
 		{
 			string output = "";
-
-			if (BCentails())
+			if (!BCentails())
 			{
 				//The method returned true so it entails
 				output = "YES: ";
@@ -90,13 +81,11 @@ namespace Assignment2
 				agenda.RemoveAt(agenda.Count - 1);
 				//add the entailed array
 				entailed.Add(q);
-
 				//if this element is a fact then we dont need to go futher
 				if (!facts.Contains(q))
 				{
 					//if not then create an array to hold new symbols to be processed 
 					List<string> p = new List<string>();
-
 					for (int i = 0; i < clauses.Count; i++)
 					{
 						//for each clauses that contains the symobl as its conclusion
@@ -119,6 +108,7 @@ namespace Assignment2
 						//there are symbols so check for previously processed ones and add to agenda
 						for (int i = 0; i < p.Count; i++)
 						{
+							
 							if (!entailed.Contains(p[i]))
 							{
 								agenda.Add(p[i]);
@@ -129,20 +119,19 @@ namespace Assignment2
 				}
 			}//while ends
 			return true;
-		}
+		} 
 
 		//method that returns the conjuncts contained in a clause
-		public static List<string> getPremises(string clause)
+		public static List<string> getPremises(string clauseTest)//
 		{
 			//get the premise
-			string premise = clause.Split('=')[1];
+			string premise = clauseTest.Split('=', '>')[0];
 			List<String> temp = new List<string>();
 			string[] conjucts = premise.Split('&');
-			//for each conjunct
 			for (int i = 0; i < conjucts.Length; i++)
 			{
 				if (!agenda.Contains(conjucts[i]))
-				{
+				{ 
 					temp.Add(conjucts[i]);
 				}
 
@@ -152,11 +141,15 @@ namespace Assignment2
 
 		// method which checks if c appears in the conclusion of a given clause	
 		// input : clause, c
-		// output : true if c is in the conclusion of clause
+		// output : true if c is in the conclusion of clause	
 		public static bool conclusionContains(string clause, string c)
 		{
-			string conclusion = clause.Split('=')[1];
-			if (conclusion.Contains(c))
+			char[] delimiter = { '=', '>' };
+			string conclusion = clause.Split(delimiter)[2];
+			//Trim conclusion due to white space
+			conclusion = conclusion.Trim();
+			c = c.Trim();
+			if (conclusion.Equals(c))
 			{
 				return true;
 			}
