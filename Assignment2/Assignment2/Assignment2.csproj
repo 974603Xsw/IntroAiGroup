@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BC2.cs" />
+    <Compile Include="FC.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="Inference Engine.cs" />
     <Compile Include="InstructionParser.cs" />

@@ -23,9 +23,8 @@ namespace Assignment2
             }
             else if (args[0] == "FC")
             {
-                BC2 BC = new BC2(Fio.getAsk(), Fio.getTell());
-                BC2.initialise(Fio.getTell());
-                Console.WriteLine(BC.execute());
+                FC ForwardChaining = new FC(Fio.getAsk(), Fio.getTell());
+                Console.WriteLine(ForwardChaining.execute());
             }
             else if (args[0] == "BC")
             {
