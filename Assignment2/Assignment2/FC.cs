@@ -102,6 +102,8 @@ namespace Assignment2
                                 return true;
                             if (head.Contains("> "))
                                 head = head.Replace("> ", "");
+                            if (head.Contains(">"))
+                                head = head.Replace(">", "");
                             agenda.Add(head);
                         }
                     }
@@ -115,7 +117,6 @@ namespace Assignment2
         // takes in string representing KB and seperates symbols and clauses, calculates count etc..
         public static void init(String tell)
         {
-            agenda.Add(ask);
             String[] sentences = tell.Split(';');
             for (int i = 0; i < sentences.Length; i++)
             {
@@ -139,8 +140,6 @@ namespace Assignment2
             String premise = clause.Split('=')[0];
             premise = premise.Trim();
             String[] conjuncts = premise.Split('&');
-            //if (conjuncts.Length == 1)
-                //Console.WriteLine(p);
             // check if p is in the premise
             if (conjuncts.Length == 1)
             {
