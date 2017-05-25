@@ -40,7 +40,7 @@ namespace Assignment2
         public String execute()
         {
             String output = "";
-            if (fcentails() == false)
+            if (!fcentails())
             {
                 // the method returned true so it entails
                 output = "YES: ";
@@ -62,17 +62,17 @@ namespace Assignment2
         public bool fcentails()
         {
             // loop through while there are unprocessed facts
-            if (agenda.Contains("")) ;
+            if (agenda.Contains("")) 
             agenda.Remove("");
 
             while (agenda.Count > 0)
             {
                 // take the first item and process it
 
-                string p = agenda[agenda.Count - 1];
-                agenda.RemoveAt(agenda.Count - 1);
+                string p = agenda[0];
+                agenda.RemoveAt(0);
                 // add to entailed
-                if(!entailed.Contains(p))
+                //if(!entailed.Contains(p))
                     entailed.Add(p);
                 // for each of the clauses....
                 for (int i = 0; i < clauses.Count; i++)
@@ -87,18 +87,22 @@ namespace Assignment2
                         if (count[i] == 0)
                         {
                             // the conclusion has been proven so put into agenda
-                            String[] head = clauses[i].Split('=');
+                            string head = clauses[i].Split('=')[1];
                             // have we just proven the 'ask'?
-                            foreach (string h in head)
+                            /*foreach (string h in head)
                             {
                                 string var = h;
                                 if (var.Contains("> "))
                                     var = var.Replace("> ", "");
                                 if (var.Equals(ask))
                                     return true;
-                            }
-
-                            agenda.Add(ask);
+                            }*/
+                            head = head.Trim();
+                            if (head.Equals(ask))
+                                return true;
+                            if (head.Contains("> "))
+                                head = head.Replace("> ", "");
+                            agenda.Add(head);
                         }
                     }
                 }
@@ -138,7 +142,7 @@ namespace Assignment2
             //if (conjuncts.Length == 1)
                 //Console.WriteLine(p);
             // check if p is in the premise
-            if (conjuncts.Length == 0)
+            if (conjuncts.Length == 1)
             {
                 return premise.Equals(p);
             }
